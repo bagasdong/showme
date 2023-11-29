@@ -1,13 +1,14 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
 import { MdPowerSettingsNew } from "@react-icons/all-files/md/MdPowerSettingsNew";
 import GetActiveIndicator from "./GetActiveIndicator";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Color } from "../helpers/color";
 import { AuthContext } from "../context/AuthContext";
 
 const GetActiveMenu = () => {
   const { logout } = useContext(AuthContext);
-  const [isActive, setIsActive] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
+  const isActive = false;
   const handleLogout = () => {
     logout();
   };

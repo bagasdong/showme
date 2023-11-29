@@ -1,6 +1,6 @@
 import { Flex, FlexProps, Text } from "@chakra-ui/react";
 import MemberLayout from "../../../components/layouts/MemberLayout";
-import { useState } from "react";
+// import { useState } from "react";
 
 interface NavMenuProps extends FlexProps {
   title: string;
@@ -24,7 +24,7 @@ const NavMenu = ({ title, ...rest }: NavMenuProps) => {
   );
 };
 const EventCategoryPage = () => {
-  const [categories, setCategories] = useState();
+  // const [categories, setCategories] = useState();
 
   return (
     <MemberLayout>

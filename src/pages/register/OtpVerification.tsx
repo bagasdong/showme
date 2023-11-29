@@ -17,6 +17,21 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { BASE_API_URL } from "../../helpers/url";
 import { Meta } from "../../models/Authentication";
 
+// Define the AxiosError interface with the 'data' property
+// Extend the AxiosResponse interface with your own custom data structure
+// Define the CustomAxiosResponse interface
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface CustomAxiosResponse<T = any> extends Omit<AxiosResponse<T>, "data"> {
+  data: {
+    meta: Meta;
+  };
+}
+
+// Define the AxiosError interface with the 'response' property of type CustomAxiosResponse
+interface AxiosErrorWithData extends AxiosError {
+  response?: CustomAxiosResponse;
+}
+
 const OtpVerification = () => {
   const { user, authCheck } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,8 +57,8 @@ const OtpVerification = () => {
         authCheck();
         setIsLoading(false);
       })
-      .catch((err: AxiosError) => {
-        const meta: Meta = err.response?.data.meta;
+      .catch((err: AxiosErrorWithData) => {
+        const meta: Meta | undefined = err.response?.data.meta;
         toast({
           title: meta?.message,
           status: "error",
@@ -76,9 +91,9 @@ const OtpVerification = () => {
         setIsResendLoading(false);
         return () => clearInterval(intervalId);
       })
-      .catch((err: AxiosError) => {
+      .catch((err: AxiosErrorWithData) => {
         setTime(0);
-        const meta: Meta = err.response?.data.meta;
+        const meta: Meta | undefined = err.response?.data.meta;
         toast({
           title: meta?.message,
           status: "error",

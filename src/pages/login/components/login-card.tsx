@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Link, Text } from "@chakra-ui/react";
 import { Color } from "../../../helpers/color.ts";
-import InputFormLogin from "../../../components/input.tsx";
+import InputFormLogin from "../../../components/Input";
 import { MdPersonOutline } from "@react-icons/all-files/md/MdPersonOutline";
 import { MdLockOutline } from "@react-icons/all-files/md/MdLockOutline";
 import { Icon } from "@iconify/react";

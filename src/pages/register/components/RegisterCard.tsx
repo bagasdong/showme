@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Link, Text, useToast } from "@chakra-ui/react";
-import InputFormLogin from "../../../components/input";
+import InputFormLogin from "../../../components/Input";
 import { Icon } from "@iconify/react";
 import eye from "@iconify/icons-ion/eye-outline";
 import eye_off from "@iconify/icons-ion/eye-off-outline";
@@ -9,7 +9,7 @@ import person_out_icon from "@iconify/icons-ion/person-outline";
 import person_icon from "@iconify/icons-ion/person";
 import { Color } from "../../../helpers/color";
 import { useContext, useState } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { BASE_API_URL } from "../../../helpers/url";
 import { AuthContext } from "../../../context/AuthContext";
 
@@ -32,7 +32,7 @@ const RegisterCard = () => {
         lastname: lastname,
         password: password,
       })
-      .then((res: AxiosResponse) => {
+      .then(() => {
         login(email, password);
       })
       .catch((err: AxiosError) => {
