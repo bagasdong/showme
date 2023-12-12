@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Link, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, Link, Text, VStack } from "@chakra-ui/react";
 import { Color } from "../../../helpers/color.ts";
 import InputFormLogin from "../../../components/Input";
 import { MdPersonOutline } from "@react-icons/all-files/md/MdPersonOutline";
@@ -8,13 +8,14 @@ import eye from "@iconify/icons-ion/eye-outline";
 import eye_off from "@iconify/icons-ion/eye-off-outline";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext.tsx";
+import { useNavigate } from "react-router-dom";
 
 const LoginCard = () => {
   const { login, isLoginLoading } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const [show, setShow] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("tadriansyah@example.com");
-  const [password, setPassword] = useState<string>("12345678");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleLogin = () => {
     login(email, password);
@@ -32,7 +33,14 @@ const LoginCard = () => {
       pt={12}
       boxShadow={"lg"}
     >
-      <Box w={"100px"} h={"100px"} backgroundColor={"white"} mb={20}></Box>
+      <Image
+        src={"/src/assets/Logo.png"}
+        mb={{ base: "10" }}
+        p={3}
+        bgColor={"white"}
+        borderRadius={15}
+        w={{ base: "100px" }}
+      />
       <Flex
         flexDir={"column"}
         w={"full"}
@@ -56,53 +64,58 @@ const LoginCard = () => {
           Selamat datang di SMART TRANSLATOR <br />
           TUNANETRA
         </Text>
-        <InputFormLogin
-          type={"text"}
-          placeholder={"Username"}
-          icon={<MdPersonOutline size="24px" />}
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          isRequired={true}
-        />
-        <InputFormLogin
-          type={show ? "text" : "password"}
-          placeholder={"Password"}
-          icon={<MdLockOutline size="24px" />}
-          rightIcon={
-            <Icon
-              icon={show ? eye : eye_off}
-              fontSize={"20px"}
-              onClick={() => setShow(!show)}
+        <form onSubmit={handleLogin}>
+          <VStack>
+            <InputFormLogin
+              type={"text"}
+              placeholder={"Username"}
+              icon={<MdPersonOutline size="24px" />}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              isRequired={true}
             />
-          }
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          isRequired={true}
-          errorBorderColor="red"
-        />
-        <Button
-          isLoading={isLoginLoading}
-          bgColor={Color.primary}
-          color={"white"}
-          w={"full"}
-          variant={"outline"}
-          py={7}
-          _hover={{
-            bgColor: "white",
-            color: "black",
-          }}
-          _loading={{
-            bgColor: "white",
-            color: "black",
-          }}
-          onClick={handleLogin}
-        >
-          Login
-        </Button>
+            <InputFormLogin
+              type={show ? "text" : "password"}
+              placeholder={"Password"}
+              icon={<MdLockOutline size="24px" />}
+              rightIcon={
+                <Icon
+                  icon={show ? eye : eye_off}
+                  fontSize={"20px"}
+                  onClick={() => setShow(!show)}
+                />
+              }
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              isRequired={true}
+              errorBorderColor="red"
+            />
+            <Button
+              isLoading={isLoginLoading}
+              bgColor={Color.primary}
+              color={"white"}
+              w={"full"}
+              variant={"outline"}
+              py={7}
+              _hover={{
+                bgColor: "white",
+                color: "black",
+              }}
+              _loading={{
+                bgColor: "white",
+                color: "black",
+              }}
+              type="submit"
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+          </VStack>
+        </form>
         <Text w={"full"} textAlign={"start"} fontSize={"12px"} mt={2}>
           Forgot Password?
         </Text>
@@ -121,6 +134,7 @@ const LoginCard = () => {
           _focus={{
             borderColor: Color.primary,
           }}
+          onClick={() => navigate("/guest")}
         >
           Guest
         </Button>

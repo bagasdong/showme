@@ -1,20 +1,15 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
 import { MdPowerSettingsNew } from "@react-icons/all-files/md/MdPowerSettingsNew";
 import GetActiveIndicator from "./GetActiveIndicator";
-import { useContext } from "react";
 import { Color } from "../helpers/color";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
 
 const GetActiveMenu = () => {
-  const { logout } = useContext(AuthContext);
-  // const [isActive, setIsActive] = useState(false);
-  const isActive = false;
-  const handleLogout = () => {
-    logout();
-  };
+  const [isActive, setIsActive] = useState(false);
+  // const isActive = false;
   return (
     <Flex
-      onClick={handleLogout}
+      onClick={() => setIsActive(!isActive)}
       w={{ base: "90%" }}
       h={{ base: "200px" }}
       bgColor={isActive ? Color.primary : "white"}
@@ -24,6 +19,7 @@ const GetActiveMenu = () => {
       border={"1px solid #CDCDCD"}
       flexDir={"column"}
       justifyContent={"space-between"}
+      cursor={"pointer"}
     >
       <Flex justifyContent={"space-between"} alignItems={"center"}>
         <Text

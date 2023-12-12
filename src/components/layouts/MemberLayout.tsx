@@ -1,6 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { Color } from "../../helpers/color";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
+import { Helmet } from "react-helmet";
 import BottomNav from "../BottomNav";
 
 interface MemberLayoutProps {
@@ -9,14 +10,15 @@ interface MemberLayoutProps {
 }
 
 const MemberLayout = ({ children, title }: MemberLayoutProps) => {
-  useEffect(() => {
-    document.title = title ?? "Member";
-  }, [title]);
+  const pathname = window.location.pathname;
   return (
     <Flex
       position={"absolute"}
+      left={{ md: "50%" }}
+      transform={{ md: "translateX(-50%)" }}
       minH={"100vh"}
-      minW={"100%"}
+      minW={{ md: "400px", base: "100%" }}
+      w={{ md: "400px", base: "100%" }}
       justifyContent={"start"}
       alignItems={"center"}
       backgroundColor={Color.bg}
@@ -24,8 +26,12 @@ const MemberLayout = ({ children, title }: MemberLayoutProps) => {
       flexDir={"column"}
       pb={10}
     >
+      <Helmet>
+        <title>{title ?? "Member"}</title>
+      </Helmet>
       {children}
-      <BottomNav isActive />
+
+      {pathname == "/member" ? <BottomNav isActive /> : ""}
     </Flex>
   );
 };
