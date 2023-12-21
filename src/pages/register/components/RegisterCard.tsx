@@ -16,10 +16,10 @@ import { AuthContext } from "../../../context/AuthContext";
 const RegisterCard = () => {
   const { login } = useContext(AuthContext);
   const [show, setShow] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("bagasw980@gmail.com");
-  const [firstname, setFirstname] = useState<string>("Bagas");
-  const [lastname, setLastname] = useState<string>("W");
-  const [password, setPassword] = useState<string>("12345678");
+  const [email, setEmail] = useState<string>("");
+  const [firstname, setFirstname] = useState<string>("");
+  const [lastname, setLastname] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 

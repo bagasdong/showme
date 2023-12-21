@@ -117,7 +117,9 @@ const LoginCard = () => {
           </VStack>
         </form>
         <Text w={"full"} textAlign={"start"} fontSize={"12px"} mt={2}>
-          Forgot Password?
+          <Link href="https://admin.voiceconvert.id/password/reset">
+            Forgot Password?
+          </Link>
         </Text>
         <Button
           isDisabled={isLoginLoading}
