@@ -9,7 +9,6 @@ import {
   WrapItemProps,
 } from "@chakra-ui/react";
 import GuestLayout from "../../../components/layouts/GuestLayout";
-import GetActiveMenu from "../../../components/GetActiveMenu";
 import { Icon } from "@iconify/react";
 import grid from "@iconify/icons-ion/grid-outline";
 import { Color } from "../../../helpers/color";
@@ -31,7 +30,7 @@ const GuestHomePage = () => {
       >
         <HStack alignItems={"center"} justifyContent={"start"}>
           <Image
-            src={"/src/assets/Logo.png"}
+            src={"https://admin.voiceconvert.id/assets/images/logo.png"}
             bgColor={"black"}
             w={{ base: "30px" }}
             h={{ base: "30px" }}
@@ -43,7 +42,6 @@ const GuestHomePage = () => {
           </Text>
         </HStack>
       </HStack>
-      <GetActiveMenu />
       <Wrap justify={"space-between"} px={6} my={5}>
         <HomeMenu title="Event" />
         <HomeMenu title="Lokasi Alat" />

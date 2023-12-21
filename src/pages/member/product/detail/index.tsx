@@ -1,15 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import LoadingPage from "../../../../components/Loading";
 import MemberLayout from "../../../../components/layouts/MemberLayout";
 import { Flex, Image, Text, VStack } from "@chakra-ui/react";
-import { BASE_API_URL } from "../../../../helpers/url";
+import { BASE_API_URL, BASE_IMAGE_URL } from "../../../../helpers/url";
 import { Product } from "../../../../models/ResponseProduct";
 import { Icon } from "@iconify/react";
 import back from "@iconify/icons-ion/arrow-back";
 import { Color } from "../../../../helpers/color";
+import HTMLString from "react-html-string";
 
 const DetailProductPage = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const DetailProductPage = () => {
           onClick={() => {
             navigate("/member/");
           }}
+          _hover={{ cursor: "pointer" }}
         >
           <Icon icon={back} />
         </Text>
@@ -60,22 +62,44 @@ const DetailProductPage = () => {
       <VStack px={3} mt={5}>
         <Image
           src={
-            product?.gambar ??
-            "https://inkifi.com/pub/media/wysiwyg/instagram-photo-size/4.jpg"
+            product?.gambar
+              ? BASE_IMAGE_URL + product.gambar
+              : "https://inkifi.com/pub/media/wysiwyg/instagram-photo-size/4.jpg"
           }
           w={"full"}
           borderRadius={"10px"}
         />
-        <Text
-          fontSize={"21px"}
-          fontWeight={"bold"}
-          textAlign={"end"}
-          w={"full"}
-          color={Color.primary}
-          my={5}
-        >
-          {rupiah(parseInt(product?.harga ?? ""))}
-        </Text>
+        <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
+          <Text
+            fontSize={"21px"}
+            fontWeight={"bold"}
+            textAlign={"start"}
+            w={"full"}
+            color={Color.primary}
+            my={5}
+          >
+            {rupiah(parseInt(product?.harga ?? "0"))}
+          </Text>
+          <Link
+            to={
+              "https://api.whatsapp.com/send/?phone=628112651934&text=Halo+Showme%2C+saya+tertarik+dengan+produk+%2A" +
+              product?.judul +
+              "%2A%2C+apakah+bisa+dibantu%3F&type=phone_number&app_absent=0"
+            }
+          >
+            <Flex
+              w={"150px"}
+              h={"40px"}
+              bgColor={Color.primary}
+              color={"white"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              borderRadius={"5px"}
+            >
+              <Text>Pesan Produk</Text>
+            </Flex>
+          </Link>
+        </Flex>
         <Text
           fontSize={"18px"}
           fontWeight={"bold"}
@@ -87,7 +111,7 @@ const DetailProductPage = () => {
         </Text>
 
         <Text fontSize={"14px"} mt={3} mb={-2} textAlign={"start"} w={"full"}>
-          {product?.deskripsi}
+          <HTMLString html={product?.deskripsi ?? ""} />
         </Text>
       </VStack>
     </MemberLayout>

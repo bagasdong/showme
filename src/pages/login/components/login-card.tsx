@@ -34,7 +34,7 @@ const LoginCard = () => {
       boxShadow={"lg"}
     >
       <Image
-        src={"/src/assets/Logo.png"}
+        src={"https://admin.voiceconvert.id/assets/images/logo.png"}
         mb={{ base: "10" }}
         p={3}
         bgColor={"white"}

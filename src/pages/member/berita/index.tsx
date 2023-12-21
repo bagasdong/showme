@@ -1,36 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import MemberLayout from "../../../components/layouts/MemberLayout";
 import {
-  Box,
   Flex,
   FlexProps,
   HStack,
-  Image,
   Select,
   Spinner,
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Product, ResponseProduct } from "../../../models/ResponseProduct";
 import axios from "axios";
-import { BASE_API_URL, BASE_IMAGE_URL } from "../../../helpers/url";
 import Cookies from "js-cookie";
+import { BASE_API_URL } from "../../../helpers/url";
 import { Icon } from "@iconify/react";
 import back from "@iconify/icons-ion/arrow-back";
 import sort from "@iconify/icons-ion/funnel-outline";
 import { Color } from "../../../helpers/color";
-import HTMLString from "react-html-string";
+import { Berita, ResponseBerita } from "../../../models/ResponseBerita";
+import { Alat } from "../../../models/ResponseAlat";
 
-interface ProductCardProps extends FlexProps {
+interface BeritaCardProps extends FlexProps {
   title?: string | undefined;
   desc?: string | undefined;
-  img?: string | undefined | null;
-  harga?: string | undefined;
+  location?: string | undefined;
+  date?: string | undefined;
 }
 
-const ProductCard = ({ title, desc, img, harga, id }: ProductCardProps) => {
+const BeritaCard = ({ title, desc, date, id }: BeritaCardProps) => {
   const navigate = useNavigate();
-
+  const tgl = new Date(date ?? "");
   return (
     <Flex
       bgColor={"white"}
@@ -44,67 +42,72 @@ const ProductCard = ({ title, desc, img, harga, id }: ProductCardProps) => {
       onClick={() => navigate("" + id)}
       _hover={{ cursor: "pointer" }}
     >
-      <Box w={"100px"} h={"75px"}>
-        <Image
-          src={
-            img
-              ? BASE_IMAGE_URL + img
-              : "https://inkifi.com/pub/media/wysiwyg/instagram-photo-size/4.jpg"
-          }
-          w={"100%"}
-          h={"100%"}
-          borderRadius={"10px"}
-          fit={"cover"}
-        />
-      </Box>
       <Flex flexDir={"column"} w={"full"} gap={1}>
         <Text fontSize={"14px"} fontWeight={"bold"}>
           {title}
         </Text>
         <Text fontSize={"12px"} noOfLines={3}>
-          <HTMLString html={desc ?? ""} />
+          {desc}
         </Text>
         <Text fontSize={"10px"} color={"#333333"} fontStyle={"italic"} mt={3}>
-          {harga}
+          {tgl.toLocaleString()}{" "}
         </Text>
       </Flex>
     </Flex>
   );
 };
 
-const ProductPage = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [sortTerm, setSortTerm] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+const BeritaPage = () => {
+  const [beritas, setBeritas] = useState<Berita[] | undefined>([]);
+  const [alats, setAlats] = useState<Alat[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [idAlat, setIdAlat] = useState<string | null>("");
+  const [sortTerm, setSortTerm] = useState<string | null>("");
   const navigate = useNavigate();
-  const rupiah = (number: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(number);
+
+  const handleSort = (e: string) => {
+    setSortTerm(e);
+  };
+
+  const handleCategory = (e: string) => {
+    setIdAlat(e);
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    const getProducts = () => {
+    const getAlats = () => {
       axios
-        .get(BASE_API_URL + "/product?&sort=" + sortTerm, {
+        .get(BASE_API_URL + "/alat", {
           headers: { Authorization: `Bearer ${Cookies.get("userToken")}` },
         })
         .then((res) => {
-          const response: ResponseProduct = res.data;
-          setProducts(response.data ?? []);
+          setAlats(res.data.data);
+          getBeritas();
+        })
+        .catch(() => {
+          setIsLoading(false);
+        });
+    };
+
+    const getBeritas = () => {
+      axios
+        .get(BASE_API_URL + "/berita?id_alat=" + idAlat + "&sort=" + sortTerm, {
+          headers: { Authorization: `Bearer ${Cookies.get("userToken")}` },
+        })
+        .then((res) => {
+          const response: ResponseBerita = res.data;
+          setBeritas(response.data);
           setIsLoading(false);
         })
         .catch(() => {
           setIsLoading(false);
         });
     };
-    getProducts();
-  }, [sortTerm]);
 
+    setIsLoading(true);
+    getAlats();
+  }, [idAlat, sortTerm]);
   return (
-    <MemberLayout>
+    <MemberLayout title="Berita">
       <Flex justifyContent={"center"} pt={3}>
         <Text
           position={"absolute"}
@@ -117,16 +120,31 @@ const ProductPage = () => {
           <Icon icon={back} />
         </Text>
         <Text fontSize={"16px"} fontWeight={"bold"}>
-          {"Product"}
+          {"Berita"}
         </Text>
       </Flex>
       <HStack w={"full"} my={5} px={5} gap={5}>
+        <Select
+          placeholder="Lokasi Alat"
+          bgColor={"white"}
+          icon={<Icon icon={sort} />}
+          iconColor="#666"
+          onChange={(e) => handleCategory(e.target.value)}
+        >
+          {alats.map((alat, index) => {
+            return (
+              <option key={index} value={alat.id}>
+                {alat.lokasi}
+              </option>
+            );
+          })}
+        </Select>
         <Select
           placeholder="Urutkan"
           bgColor={"white"}
           icon={<Icon icon={sort} />}
           iconColor="#666"
-          onChange={(e) => setSortTerm(e.target.value)}
+          onChange={(e) => handleSort(e.target.value)}
         >
           <option value="latest">Terbaru</option>
           <option value="oldest">Terlama</option>
@@ -142,15 +160,14 @@ const ProductPage = () => {
           w={"full"}
           position={"relative"}
         >
-          {products?.map((product) => {
+          {beritas?.map((berita, index) => {
             return (
-              <ProductCard
-                key={product.id}
-                id={"" + product.id}
-                title={product.judul}
-                desc={product.deskripsi}
-                img={product.gambar}
-                harga={rupiah(parseInt(product.harga ?? "0"))}
+              <BeritaCard
+                key={index}
+                id={"" + berita.id}
+                title={berita.judul}
+                desc={berita.deskripsi}
+                date={berita.created_at}
               />
             );
           })}
@@ -160,4 +177,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default BeritaPage;

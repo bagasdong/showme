@@ -8,12 +8,14 @@ import RegisterPage from "./register";
 import OtpVerification from "./register/OtpVerification";
 import EventPage from "./member/event";
 import DetailEventPage from "./member/event/detail";
-import SettingPage from "./member/setting";
 import ProfilePage from "./member/setting/profile";
 import ProductPage from "./member/product";
 import DetailProductPage from "./member/product/detail";
 import AlatPage from "./member/alat";
 import GuestHomePage from "./guest/home";
+import DetailAlatPage from "./member/alat/detail";
+import BeritaPage from "./member/berita";
+import DetailBeritaPage from "./member/berita/detail";
 interface RoutesProps {
   path: string;
   element: ReactNode;
@@ -25,8 +27,10 @@ const MemberRoutes: Array<RoutesProps> = [
   { path: "/member/product", element: <ProductPage /> },
   { path: "/member/product/:id", element: <DetailProductPage /> },
   { path: "/member/alat", element: <AlatPage /> },
-  { path: "/member/setting", element: <SettingPage /> },
-  { path: "/member/setting/profile", element: <ProfilePage /> },
+  { path: "/member/alat/:id", element: <DetailAlatPage /> },
+  { path: "/member/profile", element: <ProfilePage /> },
+  { path: "/member/berita", element: <BeritaPage /> },
+  { path: "/member/berita/:id", element: <DetailBeritaPage /> },
 ];
 
 const GuestRoutes: Array<RoutesProps> = [

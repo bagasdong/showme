@@ -18,25 +18,30 @@
     "@react-icons/all-files": "^4.1.0",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.6.2",
-    "framer-motion": "^10.16.5",
+    "framer-motion": "^10.16.16",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^6.19.0"
+    "react-html-string": "^0.1.1",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.21.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
+    "@iconify/icons-mdi": "^1.2.48",
+    "@types/leaflet": "^1.9.8",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
     "@types/react-helmet": "^6.1.11",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
-    "@vitejs/plugin-react": "^4.2.0",
-    "eslint": "^8.53.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.4",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
   }
 }

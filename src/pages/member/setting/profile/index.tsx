@@ -18,7 +18,7 @@ const ProfilePage = () => {
           left={5}
           top={6}
           onClick={() => {
-            navigate("/member/setting");
+            navigate("/member");
           }}
         >
           <Icon icon={back} />

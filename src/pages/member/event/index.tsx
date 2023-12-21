@@ -4,7 +4,6 @@ import {
   Flex,
   FlexProps,
   HStack,
-  Image,
   Select,
   Spinner,
   Text,
@@ -43,13 +42,8 @@ const EventCard = ({ title, desc, location, date, id }: EventCardProps) => {
       gap={3}
       alignItems={"center"}
       onClick={() => navigate("" + id)}
+      _hover={{ cursor: "pointer" }}
     >
-      <Image
-        src="https://inkifi.com/pub/media/wysiwyg/instagram-photo-size/4.jpg"
-        w={"100px"}
-        h={"100"}
-        borderRadius={"10px"}
-      />
       <Flex flexDir={"column"} w={"full"} gap={1}>
         <Text fontSize={"14px"} fontWeight={"bold"}>
           {title}

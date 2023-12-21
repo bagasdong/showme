@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from "react";
+import { ReactElement, useContext } from "react";
 import MemberLayout from "../../../components/layouts/MemberLayout";
 import { Flex, FlexProps, HStack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";

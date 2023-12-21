@@ -1,8 +1,11 @@
 import MemberLayout from "../../../components/layouts/MemberLayout";
 import { Icon } from "@iconify/react";
 import back from "@iconify/icons-ion/arrow-back";
+import electric from "@iconify/icons-mdi/lightning-bolt-outline";
+import power from "@iconify/icons-mdi/power";
 import { Color } from "../../../helpers/color";
 import {
+  Box,
   Flex,
   FlexProps,
   HStack,
@@ -32,8 +35,6 @@ const AlatPage = () => {
         .then((res) => {
           const response: ResponseAlat = res.data;
           setAlats(response.data ?? []);
-          console.log(response.data);
-
           setIsLoading(false);
         })
         .catch(() => {
@@ -53,6 +54,7 @@ const AlatPage = () => {
           onClick={() => {
             navigate("/member");
           }}
+          _hover={{ cursor: "pointer" }}
         >
           <Icon icon={back} />
         </Text>
@@ -65,14 +67,14 @@ const AlatPage = () => {
       ) : (
         <VStack gap={3} w={"full"} px={5} mt={5}>
           {alats.map((alat, index) => {
-            console.log(alat.updated_at);
-
             return (
               <AlatCard
                 key={index}
                 lokasi={alat.lokasi}
                 tegangan={alat.tegangan}
                 updated_at={alat.updated_at}
+                onClick={() => navigate("" + alat.id)}
+                _hover={{ cursor: "pointer" }}
               />
             );
           })}
@@ -88,7 +90,12 @@ interface AlatCardProps extends FlexProps {
   updated_at?: string;
 }
 
-const AlatCard = ({ lokasi, tegangan, updated_at, ...rest }: AlatCardProps) => {
+export const AlatCard = ({
+  lokasi,
+  tegangan,
+  updated_at,
+  ...rest
+}: AlatCardProps) => {
   return (
     <Flex
       flexDir={"column"}
@@ -111,7 +118,9 @@ const AlatCard = ({ lokasi, tegangan, updated_at, ...rest }: AlatCardProps) => {
       </HStack>
       <HStack justifyContent={"space-between"}>
         <HStack alignItems={"center"} gap={3}>
-          <Text>O</Text>
+          <Box padding={"1"} backgroundColor={"#7DBDBD"} borderRadius={"100px"}>
+            <Icon icon={electric} color="white" />
+          </Box>
           <VStack alignItems={"start"}>
             <Text fontSize={"14px"} color={"#8D8D8D"} mb={-2}>
               Tegangan
@@ -122,13 +131,15 @@ const AlatCard = ({ lokasi, tegangan, updated_at, ...rest }: AlatCardProps) => {
           </VStack>
         </HStack>
         <HStack alignItems={"center"} gap={3}>
-          <Text>O</Text>
+          <Box padding={"1"} backgroundColor={"#FF6897"} borderRadius={"100px"}>
+            <Icon icon={power} color="white" />
+          </Box>
           <VStack alignItems={"start"}>
             <Text fontSize={"14px"} color={"#8D8D8D"} mb={-2}>
-              Tegangan
+              Status
             </Text>
             <Text fontSize={"18px"} fontWeight={"bold"}>
-              5V
+              Off
             </Text>
           </VStack>
         </HStack>
