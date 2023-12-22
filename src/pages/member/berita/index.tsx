@@ -18,6 +18,7 @@ import sort from "@iconify/icons-ion/funnel-outline";
 import { Color } from "../../../helpers/color";
 import { Berita, ResponseBerita } from "../../../models/ResponseBerita";
 import { Alat } from "../../../models/ResponseAlat";
+import HTMLString from "react-html-string";
 
 interface BeritaCardProps extends FlexProps {
   title?: string | undefined;
@@ -47,7 +48,7 @@ const BeritaCard = ({ title, desc, date, id }: BeritaCardProps) => {
           {title}
         </Text>
         <Text fontSize={"12px"} noOfLines={3}>
-          {desc}
+          <HTMLString html={desc ?? ""} />
         </Text>
         <Text fontSize={"10px"} color={"#333333"} fontStyle={"italic"} mt={3}>
           {tgl.toLocaleString()}{" "}

@@ -9,6 +9,7 @@ import LoadingPage from "../../../../components/Loading";
 import { Icon } from "@iconify/react";
 import back from "@iconify/icons-ion/arrow-back";
 import { Berita } from "../../../../models/ResponseBerita";
+import HTMLString from "react-html-string";
 
 const DetailBeritaPage = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const DetailBeritaPage = () => {
           {new Date(berita?.created_at ?? "").toLocaleString()}
         </Text>
         <Text fontSize={"16px"} mt={3} textAlign={"justify"}>
-          {berita?.deskripsi}
+          <HTMLString html={berita?.deskripsi ?? ""} />
         </Text>
         <Text></Text>
       </VStack>
