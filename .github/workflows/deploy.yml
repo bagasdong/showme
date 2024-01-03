@@ -1,0 +1,49 @@
+name: deploy
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      # - name: Setup PHP
+      #   uses: shivammathur/setup-php@v2
+      #   with:
+      #     php-version: 8.1
+      #     tools: composer:v2
+      #     coverage: none
+      # - name: Install Composer dependencies
+      #   run: composer update
+      # - name: Setup SSH
+      #   uses: kielabokkie/ssh-key-and-known-hosts-action@v1.2.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     ssh-host: ${{ secrets.SSH_HOST }}
+      # - name: Set up Node
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: "18.x"
+      # - run: npm install
+      # - run: npm run build
+      # - name: Commit built assets
+      #   run: |
+      #     git config --local user.email "bagasw980@gmail.com"
+      #     git config --local user.name "bagasw980"
+      #     git checkout -B dev
+      #     git add .
+      #     git commit -m "Build front-end assets"
+      #     git push -u origin dev
+      - name: Deploy to production
+        uses: appleboy/ssh-action@v1.0.2
+        with:
+          username: root
+          # host: ${{ secrets.SSH_HOST }}
+          # password: ${{ secrets.SSH_PASSWORD }}
+          host: 195.35.23.172
+          password: Showme354
+          port: 22
+          script: "cd /var/www/html/showme && ./server_deploy.sh"
