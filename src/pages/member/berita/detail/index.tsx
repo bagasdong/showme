@@ -41,7 +41,7 @@ const DetailBeritaPage = () => {
           left={5}
           top={4}
           onClick={() => {
-            navigate("/member/berita");
+            navigate(-1);
           }}
         >
           <Icon icon={back} />

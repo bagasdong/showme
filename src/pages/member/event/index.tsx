@@ -119,7 +119,7 @@ const EventPage = () => {
           left={5}
           top={4}
           onClick={() => {
-            navigate("/member");
+            navigate(-1);
           }}
         >
           <Icon icon={back} />

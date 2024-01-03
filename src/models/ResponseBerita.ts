@@ -11,6 +11,8 @@ export interface Berita {
   judul?: string;
   gambar?: string;
   deskripsi?: string;
+  latitude?: string;
+  longitude?: string;
   created_at?: string;
   updated_at?: Date;
 }

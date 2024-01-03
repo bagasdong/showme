@@ -1,20 +1,11 @@
-import {
-  Box,
-  Flex,
-  HStack,
-  Image,
-  Text,
-  Wrap,
-  WrapItem,
-  WrapItemProps,
-} from "@chakra-ui/react";
+import { HStack, Image, Text, Wrap } from "@chakra-ui/react";
 import GuestLayout from "../../../components/layouts/GuestLayout";
-import { Icon } from "@iconify/react";
-import grid from "@iconify/icons-ion/grid-outline";
-import { Color } from "../../../helpers/color";
-import { useContext } from "react";
-import { GuestContext } from "../../../context/GuestContext";
+import horn from "@iconify/icons-mdi/bullhorn";
+import news from "@iconify/icons-mdi/newspaper";
+import cart from "@iconify/icons-mdi/cart";
+import login from "@iconify/icons-mdi/login";
 import { useNavigate } from "react-router-dom";
+import HomeMenu from "../../member/home/components/HomeMenu";
 
 const GuestHomePage = () => {
   const navigate = useNavigate();
@@ -42,90 +33,17 @@ const GuestHomePage = () => {
           </Text>
         </HStack>
       </HStack>
-      <Wrap justify={"space-between"} px={6} my={5}>
-        <HomeMenu title="Event" />
-        <HomeMenu title="Lokasi Alat" />
-        <HomeMenu title="Product" />
-        <WrapItem onClick={() => navigate("/login")}>
-          <Box
-            w={"150px"}
-            h={"150px"}
-            bgColor={"white"}
-            shadow={"md"}
-            borderRadius={"15px"}
-            mb={3}
-            p={5}
-            cursor={"pointer"}
-            transition={"all 0.3s"}
-            _hover={{ bgColor: Color.primary, color: "white" }}
-          >
-            <Flex
-              flexDir={"column"}
-              justifyContent={"space-between"}
-              w={"full"}
-              h={"full"}
-            >
-              <HStack w={"full"} justifyContent={"end"}>
-                <Box shadow={"md"}>
-                  <Icon icon={grid} />
-                </Box>
-              </HStack>
-              <Text fontSize={"20px"} fontWeight={"500"}>
-                Login
-              </Text>
-            </Flex>
-          </Box>
-        </WrapItem>
+      <Wrap justify={"space-between"} px={6} my={10}>
+        <HomeMenu title="Event" icon={horn} to="event" />
+        <HomeMenu title="Berita" icon={news} to="berita" />
+        <HomeMenu title="Product" to="product" icon={cart} />
+        <HomeMenu
+          title="Login"
+          icon={login}
+          onClick={() => navigate("/login")}
+        />
       </Wrap>
     </GuestLayout>
-  );
-};
-interface HomeMenuProps extends WrapItemProps {
-  title: string;
-}
-
-const HomeMenu: React.FC<HomeMenuProps> = ({ title, ...rest }) => {
-  const { showToast } = useContext(GuestContext);
-  return (
-    <WrapItem
-      {...rest}
-      onClick={() => {
-        showToast(
-          "warning",
-          "",
-          "Silahkan login terlebih dahulu, sebelum dapat mengakses menu ini."
-        );
-      }}
-    >
-      <Box
-        w={"150px"}
-        h={"150px"}
-        bgColor={"white"}
-        shadow={"md"}
-        borderRadius={"15px"}
-        mb={3}
-        p={5}
-        cursor={"pointer"}
-        transition={"all 0.3s"}
-        _hover={{ bgColor: Color.primary, color: "white" }}
-      >
-        <Flex
-          flexDir={"column"}
-          justifyContent={"space-between"}
-          w={"full"}
-          h={"full"}
-        >
-          <HStack w={"full"} justifyContent={"end"}>
-            <Box shadow={"md"}>
-              <Icon icon={grid} />
-            </Box>
-          </HStack>
-          <Text fontSize={"20px"} fontWeight={"500"}>
-            {title}
-          </Text>
-        </Flex>
-      </Box>
-    </WrapItem>
   );
 };
 

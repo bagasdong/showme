@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import MemberLayout from "../../../components/layouts/MemberLayout";
 import {
-  Box,
   Flex,
   FlexProps,
   HStack,
@@ -13,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { Product, ResponseProduct } from "../../../models/ResponseProduct";
 import axios from "axios";
-import { BASE_API_URL, BASE_IMAGE_URL } from "../../../helpers/url";
+import { BASE_API_URL, BASE_URL } from "../../../helpers/url";
 import Cookies from "js-cookie";
 import { Icon } from "@iconify/react";
 import back from "@iconify/icons-ion/arrow-back";
@@ -44,20 +43,8 @@ const ProductCard = ({ title, desc, img, harga, id }: ProductCardProps) => {
       onClick={() => navigate("" + id)}
       _hover={{ cursor: "pointer" }}
     >
-      <Box w={"100px"} h={"75px"}>
-        <Image
-          src={
-            img
-              ? BASE_IMAGE_URL + img
-              : "https://inkifi.com/pub/media/wysiwyg/instagram-photo-size/4.jpg"
-          }
-          w={"100%"}
-          h={"100%"}
-          borderRadius={"10px"}
-          fit={"cover"}
-        />
-      </Box>
-      <Flex flexDir={"column"} w={"full"} gap={1}>
+      <Image src={BASE_URL + img} w={"75px"} h={"75px"} borderRadius={"10px"} />
+      <Flex flexDir={"column"} w={"230px"} gap={1}>
         <Text fontSize={"14px"} fontWeight={"bold"}>
           {title}
         </Text>
@@ -111,8 +98,9 @@ const ProductPage = () => {
           left={5}
           top={4}
           onClick={() => {
-            navigate("/member");
+            navigate(-1);
           }}
+          cursor={"pointer"}
         >
           <Icon icon={back} />
         </Text>
@@ -149,7 +137,7 @@ const ProductPage = () => {
                 id={"" + product.id}
                 title={product.judul}
                 desc={product.deskripsi}
-                img={product.gambar}
+                img={product.images ? product.images[0].name : ""}
                 harga={rupiah(parseInt(product.harga ?? "0"))}
               />
             );

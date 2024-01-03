@@ -26,8 +26,6 @@ const DetailEventPage = () => {
       })
       .then((res) => {
         setEvent(res.data.data);
-        console.log(res.data.data);
-
         setIsLoading(false);
       });
   }, [id]);
@@ -42,7 +40,7 @@ const DetailEventPage = () => {
           left={5}
           top={4}
           onClick={() => {
-            navigate("/member/event");
+            navigate(-1);
           }}
         >
           <Icon icon={back} />

@@ -3,7 +3,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { BASE_API_URL } from "../helpers/url";
 import { useToast } from "@chakra-ui/react";
-import { Authentication, User } from "../models/Authentication";
+import { Authentication, Meta, User } from "../models/Authentication";
 
 export interface AuthContextValue {
   isLoggedIn: boolean;
@@ -54,9 +54,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           setIsLoginLoading(false);
         } else {
           toast({
-            title: "User not found!",
-            description:
-              "Make sure the user has registered as a member using an active email.",
+            title: "Error !",
+            description: data.meta?.message,
             status: "error",
             variant: "subtle",
             position: "top",
@@ -67,10 +66,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
       })
       .catch((err: AxiosError) => {
-        // console.log(err.code);
+        const errorResp: Meta = err.response?.data ?? "";
+
         if (err.code == "ERR_NETWORK") {
           toast({
             title: "Network error!",
+            status: "error",
+            variant: "subtle",
+            position: "top",
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: errorResp.message,
             status: "error",
             variant: "subtle",
             position: "top",
@@ -86,26 +94,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const token = Cookies.get("userToken");
 
     axios
-      .post(
-        BASE_API_URL + "/logout",
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
+      .post(BASE_API_URL + "/logout", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then(() => {
         Cookies.remove("userToken");
         setIsLoggedIn(false);
         setIsLoading(false);
       })
       .catch(() => {
-        toast({
-          title: "Logout failed, something error!",
-          status: "error",
-          variant: "subtle",
-          position: "top",
-          isClosable: true,
-        });
+        Cookies.remove("userToken");
+        setIsLoggedIn(false);
+        setIsLoading(false);
+        // toast({
+        //   title: "Logout failed, something error!",
+        //   status: "error",
+        //   variant: "subtle",
+        //   position: "top",
+        //   isClosable: true,
+        // });
       });
   };
 

@@ -9,8 +9,13 @@ export interface Product {
   id?: number;
   judul?: string;
   deskripsi?: string;
-  gambar?: null;
   harga?: string;
   created_at?: Date;
   updated_at?: Date;
+  images?: Image[];
+}
+
+export interface Image {
+  id?: number;
+  name?: string;
 }

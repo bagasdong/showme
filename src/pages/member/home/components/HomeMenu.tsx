@@ -18,43 +18,79 @@ interface HomeMenuProps extends WrapItemProps {
 
 const HomeMenu: React.FC<HomeMenuProps> = ({ title, to, icon, ...rest }) => {
   const navigate = useNavigate();
-  return (
-    <WrapItem
-      {...rest}
-      onClick={() => {
-        navigate(to ?? "");
-      }}
-    >
-      <Box
-        w={"150px"}
-        h={"150px"}
-        bgColor={"white"}
-        shadow={"md"}
-        borderRadius={"15px"}
-        mb={3}
-        p={5}
-        cursor={"pointer"}
-        transition={"all 0.3s"}
-        _hover={{ bgColor: Color.primary, color: "white" }}
+
+  if (to) {
+    return (
+      <WrapItem
+        {...rest}
+        onClick={() => {
+          navigate(to ?? "");
+        }}
       >
-        <Flex
-          flexDir={"column"}
-          justifyContent={"space-between"}
-          w={"full"}
-          h={"full"}
+        <Box
+          w={"150px"}
+          h={"150px"}
+          bgColor={"white"}
+          shadow={"md"}
+          borderRadius={"15px"}
+          mb={3}
+          p={5}
+          cursor={"pointer"}
+          transition={"all 0.3s"}
+          _hover={{ bgColor: Color.primary, color: "white" }}
         >
-          <HStack w={"full"} justifyContent={"end"}>
-            <Box bgColor={"#CAD5DD"} p={2} borderRadius={"5px"}>
-              <Icon icon={icon ?? ""} fontSize={"24px"} />
-            </Box>
-          </HStack>
-          <Text fontSize={"20px"} fontWeight={"500"}>
-            {title}
-          </Text>
-        </Flex>
-      </Box>
-    </WrapItem>
-  );
+          <Flex
+            flexDir={"column"}
+            justifyContent={"space-between"}
+            w={"full"}
+            h={"full"}
+          >
+            <HStack w={"full"} justifyContent={"end"}>
+              <Box bgColor={"#CAD5DD"} p={2} borderRadius={"5px"}>
+                <Icon icon={icon ?? ""} fontSize={"24px"} />
+              </Box>
+            </HStack>
+            <Text fontSize={"20px"} fontWeight={"500"}>
+              {title}
+            </Text>
+          </Flex>
+        </Box>
+      </WrapItem>
+    );
+  } else {
+    return (
+      <WrapItem {...rest}>
+        <Box
+          w={"150px"}
+          h={"150px"}
+          bgColor={"white"}
+          shadow={"md"}
+          borderRadius={"15px"}
+          mb={3}
+          p={5}
+          cursor={"pointer"}
+          transition={"all 0.3s"}
+          _hover={{ bgColor: Color.primary, color: "white" }}
+        >
+          <Flex
+            flexDir={"column"}
+            justifyContent={"space-between"}
+            w={"full"}
+            h={"full"}
+          >
+            <HStack w={"full"} justifyContent={"end"}>
+              <Box bgColor={"#CAD5DD"} p={2} borderRadius={"5px"}>
+                <Icon icon={icon ?? ""} fontSize={"24px"} />
+              </Box>
+            </HStack>
+            <Text fontSize={"20px"} fontWeight={"500"}>
+              {title}
+            </Text>
+          </Flex>
+        </Box>
+      </WrapItem>
+    );
+  }
 };
 
 export default HomeMenu;

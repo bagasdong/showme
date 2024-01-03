@@ -16,36 +16,39 @@ import GuestHomePage from "./guest/home";
 import DetailAlatPage from "./member/alat/detail";
 import BeritaPage from "./member/berita";
 import DetailBeritaPage from "./member/berita/detail";
+import { DetailBeritaPage as AlatDetailBerita } from "./member/alat/detail/berita/detail";
+import { DetailEventPage as AlatDetailEvent } from "./member/alat/detail/event/detail";
+import { Center, Text, VStack } from "@chakra-ui/react";
+import { Color } from "../helpers/color";
 interface RoutesProps {
   path: string;
   element: ReactNode;
 }
 const MemberRoutes: Array<RoutesProps> = [
   { path: "/member", element: <HomePage /> },
+  { path: "/member/profile", element: <ProfilePage /> },
+  { path: "/member/alat", element: <AlatPage /> },
+  { path: "/member/alat/:id", element: <DetailAlatPage /> },
+  { path: "/member/alat/:id/berita/:id_berita", element: <AlatDetailBerita /> },
+  { path: "/member/alat/:id/event/:id_event", element: <AlatDetailEvent /> },
   { path: "/member/event", element: <EventPage /> },
   { path: "/member/event/:id", element: <DetailEventPage /> },
   { path: "/member/product", element: <ProductPage /> },
   { path: "/member/product/:id", element: <DetailProductPage /> },
-  { path: "/member/alat", element: <AlatPage /> },
-  { path: "/member/alat/:id", element: <DetailAlatPage /> },
-  { path: "/member/profile", element: <ProfilePage /> },
   { path: "/member/berita", element: <BeritaPage /> },
   { path: "/member/berita/:id", element: <DetailBeritaPage /> },
 ];
 
 const GuestRoutes: Array<RoutesProps> = [
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
-  },
-  {
-    path: "/guest",
-    element: <GuestHomePage />,
-  },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/register", element: <RegisterPage /> },
+  { path: "/guest", element: <GuestHomePage /> },
+  { path: "/guest/event", element: <EventPage /> },
+  { path: "/guest/event/:id", element: <DetailEventPage /> },
+  { path: "/guest/product", element: <ProductPage /> },
+  { path: "/guest/product/:id", element: <DetailProductPage /> },
+  { path: "/guest/berita", element: <BeritaPage /> },
+  { path: "/guest/berita/:id", element: <DetailBeritaPage /> },
 ];
 
 const Navigation = () => {
@@ -69,6 +72,7 @@ const Navigation = () => {
             />
           );
         })}
+        <Route path="*" element={<PageNotFound />} />.
       </Routes>
     ) : (
       <Routes>
@@ -89,6 +93,7 @@ const Navigation = () => {
             />
           );
         })}
+        <Route path="*" element={<PageNotFound />} />.
       </Routes>
     )
   ) : (
@@ -106,8 +111,23 @@ const Navigation = () => {
           />
         );
       })}
+      <Route path="*" element={<PageNotFound />} />.
     </Routes>
   );
 };
 
+const PageNotFound = () => {
+  return (
+    <Center w={"100vw"} h={"100vh"}>
+      <VStack>
+        <Text fontSize={72} fontWeight={"bold"} color={Color.primary} mb={-3}>
+          404
+        </Text>
+        <Text fontSize={20} color={"gray"}>
+          Page Not Found
+        </Text>
+      </VStack>
+    </Center>
+  );
+};
 export default Navigation;

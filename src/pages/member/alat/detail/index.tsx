@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { useRef } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { BASE_API_URL } from "../../../../helpers/url";
 import Cookies from "js-cookie";
@@ -14,27 +14,51 @@ import { Alat } from "../../../../models/ResponseAlat";
 import { AlatCard } from "..";
 import { Icon } from "@iconify/react";
 import back from "@iconify/icons-ion/arrow-back";
+import { Berita } from "../../../../models/ResponseBerita";
+import { alatIcon, beritaIcon, eventIcon } from "../map_icon";
+import { Event } from "../../../../models/ResponseEvent";
 
 const DetailAlatPage = () => {
   const mapRef = useRef(null);
   const [alat, setAlat] = useState<Alat>();
+  const [berita, setBerita] = useState<Berita[]>();
+  const [event, setEvent] = useState<Event[]>();
   const [isLoading, setIsLoading] = useState(true);
-  const { pathname } = useLocation();
-  const lastSegment = pathname.split("/").pop();
+  const { id } = useParams();
+  // const { pathname } = useLocation();
+  // const lastSegment = pathname.split("/").pop();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(BASE_API_URL + "/alat/" + lastSegment, {
+      .get(BASE_API_URL + "/alat/" + id, {
         headers: {
           Authorization: `Bearer ${Cookies.get("userToken")}`,
         },
       })
       .then((res: AxiosResponse) => {
         setAlat(res.data.data);
+        axios
+          .get(BASE_API_URL + "/berita?id_alat=" + res.data.data.id, {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("userToken")}`,
+            },
+          })
+          .then((resp: AxiosResponse) => {
+            setBerita(resp.data.data);
+          });
+        axios
+          .get(BASE_API_URL + "/event?id_alat=" + res.data.data.id, {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("userToken")}`,
+            },
+          })
+          .then((resp: AxiosResponse) => {
+            setEvent(resp.data.data);
+          });
         setIsLoading(false);
       });
-  }, [lastSegment]);
+  }, [id]);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -47,7 +71,7 @@ const DetailAlatPage = () => {
           parseFloat(alat!.latitude ?? "0"),
           parseFloat(alat!.longitude ?? "0"),
         ]}
-        zoom={13}
+        zoom={15}
         ref={mapRef}
         style={{ height: "100vh", width: "100vw" }}
       >
@@ -60,7 +84,38 @@ const DetailAlatPage = () => {
             parseFloat(alat!.latitude ?? "0"),
             parseFloat(alat!.longitude ?? "0"),
           ]}
+          icon={alatIcon}
         ></Marker>
+        {berita?.map((item, index) => {
+          return (
+            <Marker
+              key={index}
+              position={[
+                parseFloat(item.latitude ?? "0"),
+                parseFloat(item.longitude ?? "0"),
+              ]}
+              icon={beritaIcon}
+              eventHandlers={{
+                click: () => navigate("berita/" + item.id),
+              }}
+            ></Marker>
+          );
+        })}
+        {event?.map((item, index) => {
+          return (
+            <Marker
+              key={index}
+              position={[
+                parseFloat(item.latitude ?? "0"),
+                parseFloat(item.longitude ?? "0"),
+              ]}
+              icon={eventIcon}
+              eventHandlers={{
+                click: () => navigate("event/" + item.id),
+              }}
+            ></Marker>
+          );
+        })}
 
         {/* Additional map layers or components can be added here */}
       </MapContainer>

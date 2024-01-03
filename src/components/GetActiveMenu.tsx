@@ -2,14 +2,40 @@ import { Center, Flex, Text } from "@chakra-ui/react";
 import { MdPowerSettingsNew } from "@react-icons/all-files/md/MdPowerSettingsNew";
 import GetActiveIndicator from "./GetActiveIndicator";
 import { Color } from "../helpers/color";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGeolocated } from "react-geolocated";
 
 const GetActiveMenu = () => {
   const [isActive, setIsActive] = useState(false);
-  // const isActive = false;
+  const { getPosition, coords } = useGeolocated({
+    positionOptions: {
+      enableHighAccuracy: false,
+    },
+    userDecisionTimeout: 5000,
+    watchPosition: true,
+  });
+
+  const handleGetLocation = () => {
+    getPosition;
+    if (coords) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+      alert("Please allow GPS");
+    }
+  };
+
+  useEffect(() => {
+    if (coords) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, [coords]);
+
   return (
     <Flex
-      onClick={() => setIsActive(!isActive)}
+      onClick={handleGetLocation}
       w={{ base: "90%" }}
       h={{ base: "200px" }}
       bgColor={isActive ? Color.primary : "white"}
@@ -27,7 +53,7 @@ const GetActiveMenu = () => {
           fontWeight={"bold"}
           color={isActive ? "white" : "black"}
         >
-          Get Active
+          Get Location
         </Text>
         <Center
           h={"50px"}
