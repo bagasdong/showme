@@ -137,7 +137,7 @@ const ProductPage = () => {
                 id={"" + product.id}
                 title={product.judul}
                 desc={product.deskripsi}
-                img={product.images ? product.images[0].name : ""}
+                img={product.images?.length > 0 ? product.images[0].name : ""}
                 harga={rupiah(parseInt(product.harga ?? "0"))}
               />
             );
