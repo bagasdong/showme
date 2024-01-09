@@ -3,6 +3,7 @@ import GuestLayout from "../../../components/layouts/GuestLayout";
 import horn from "@iconify/icons-mdi/bullhorn";
 import news from "@iconify/icons-mdi/newspaper";
 import cart from "@iconify/icons-mdi/cart";
+import gallery from "@iconify/icons-mdi/view-gallery-outline";
 import login from "@iconify/icons-mdi/login";
 import { useNavigate } from "react-router-dom";
 import HomeMenu from "../../member/home/components/HomeMenu";
@@ -37,6 +38,7 @@ const GuestHomePage = () => {
         <HomeMenu title="Event" icon={horn} to="event" />
         <HomeMenu title="Berita" icon={news} to="berita" />
         <HomeMenu title="Product" to="product" icon={cart} />
+        <HomeMenu title="Gallery" to="gallery" icon={gallery} />
         <HomeMenu
           title="Login"
           icon={login}

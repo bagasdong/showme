@@ -1,4 +1,5 @@
 import { Meta } from "./Authentication";
+import { Voice } from "./ResponseVoices";
 
 export interface ResponseEvent {
   meta?: Meta;
@@ -12,6 +13,7 @@ export interface Event {
   lokasi?: string;
   latitude?: null;
   longitude?: null;
+  voices?: Voice[];
   tgl_event?: string;
   deskripsi?: string;
   created_at?: Date;

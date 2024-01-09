@@ -18,4 +18,5 @@ export interface Product {
 export interface Image {
   id?: number;
   name?: string;
+  filename?: string;
 }

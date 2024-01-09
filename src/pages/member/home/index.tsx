@@ -8,6 +8,7 @@ import horn from "@iconify/icons-mdi/bullhorn";
 import news from "@iconify/icons-mdi/newspaper";
 import map from "@iconify/icons-mdi/map-marker-radius";
 import cart from "@iconify/icons-mdi/cart";
+import gallery from "@iconify/icons-mdi/view-gallery-outline";
 import logoutIcon from "@iconify/icons-mdi/logout";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -75,6 +76,7 @@ const HomePage = () => {
         <HomeMenu title="Event" icon={horn} to="event" />
         <HomeMenu title="Berita" icon={news} to="berita" />
         <HomeMenu title="Product" to="product" icon={cart} />
+        <HomeMenu title="Gallery" to="gallery" icon={gallery} />
         <HomeMenu title="Logout" icon={logoutIcon} onClick={() => logout()} />
       </Wrap>
     </MemberLayout>

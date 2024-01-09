@@ -1,4 +1,5 @@
 import { Meta } from "./Authentication";
+import { Voice } from "./ResponseVoices";
 
 export interface ResponseBerita {
   meta?: Meta;
@@ -13,6 +14,7 @@ export interface Berita {
   deskripsi?: string;
   latitude?: string;
   longitude?: string;
+  voices?: Voice[];
   created_at?: string;
   updated_at?: Date;
 }

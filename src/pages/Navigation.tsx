@@ -20,6 +20,8 @@ import { DetailBeritaPage as AlatDetailBerita } from "./member/alat/detail/berit
 import { DetailEventPage as AlatDetailEvent } from "./member/alat/detail/event/detail";
 import { Center, Text, VStack } from "@chakra-ui/react";
 import { Color } from "../helpers/color";
+import GalleryPage from "./member/gallery";
+import DetailGalleryPage from "./member/gallery/detail";
 interface RoutesProps {
   path: string;
   element: ReactNode;
@@ -37,6 +39,8 @@ const MemberRoutes: Array<RoutesProps> = [
   { path: "/member/product/:id", element: <DetailProductPage /> },
   { path: "/member/berita", element: <BeritaPage /> },
   { path: "/member/berita/:id", element: <DetailBeritaPage /> },
+  { path: "/member/gallery", element: <GalleryPage /> },
+  { path: "/member/gallery/:id", element: <DetailGalleryPage /> },
 ];
 
 const GuestRoutes: Array<RoutesProps> = [
@@ -49,6 +53,8 @@ const GuestRoutes: Array<RoutesProps> = [
   { path: "/guest/product/:id", element: <DetailProductPage /> },
   { path: "/guest/berita", element: <BeritaPage /> },
   { path: "/guest/berita/:id", element: <DetailBeritaPage /> },
+  { path: "/guest/gallery", element: <GalleryPage /> },
+  { path: "/guest/gallery/:id", element: <DetailGalleryPage /> },
 ];
 
 const Navigation = () => {

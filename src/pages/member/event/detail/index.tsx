@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import MemberLayout from "../../../../components/layouts/MemberLayout";
 import { Flex, Text, VStack } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
-import { BASE_API_URL } from "../../../../helpers/url";
+import { BASE_API_URL, BASE_VOICE_URL } from "../../../../helpers/url";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Event } from "../../../../models/ResponseEvent";
 import LoadingPage from "../../../../components/Loading";
 import { Icon } from "@iconify/react";
 import back from "@iconify/icons-ion/arrow-back";
+import ReactAudioPlayer from "react-audio-player";
 
 const DetailEventPage = () => {
   const navigate = useNavigate();
@@ -72,7 +73,18 @@ const DetailEventPage = () => {
         <Text fontSize={"16px"} mt={3} textAlign={"justify"}>
           {event?.deskripsi}
         </Text>
-        <Text></Text>
+        <VStack my={5}>
+          {event?.voices == null
+            ? ""
+            : event.voices.map((voice) => {
+                return (
+                  <ReactAudioPlayer
+                    src={BASE_VOICE_URL + voice.filename}
+                    controls
+                  />
+                );
+              })}
+        </VStack>
       </VStack>
     </MemberLayout>
   );
